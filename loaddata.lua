@@ -6,12 +6,12 @@ local seq = require('pl.seq')
 require 'nn'
 
 local function loaddata(name)
-    local data = seq.lines(name)
-                    :take(10000000000)
-                    :map( function(s) return torch.Tensor(s:split(' ')) end)
-                    :copy()
+    local data = seq.lines(name) --create a wrapped iterator over all lines in the file.
+                    :take(10000000000) -- take at most n items at a time
+                    :map( function(s) return torch.Tensor(s:split(' ')) end) --transform data
+                    :copy() -- create a copy of the sequence, return a list.
 
-    function data:size() return #data end
+    function data:size() return #data end --#data works like len(data)
 
     return data
 end
